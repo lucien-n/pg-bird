@@ -3,8 +3,10 @@ from random import randint
 
 
 class Pipe:
-    def __init__(self, type: str) -> None:
+    def __init__(self, type: str, width: int) -> None:
         self.type = type
+        self.width = width
+
         self.gap = PIPE_RED_GAP if type == "red" else PIPE_GREEN_GAP
 
         self.x = CANVAS_SIZE

@@ -32,20 +32,20 @@ class Piper:
         if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
             type = "green"
 
-            # 8 percent change to get a red pipe
-            r = randint(1, 1 + 1)
-            if r == 1:
+            # 4 percent change to get a red pipe
+            r = randint(0, 25)
+            if r == 0:
                 type = "red"
 
-            pipe = Pipe(type)
+            pipe = Pipe(type, self.pipes_sprites[type][0].get_width())
             self.pipes.append(pipe)
 
         # filter out of screen pipes
-        self.pipes = [pipe for pipe in self.pipes if pipe.x + PIPE_WIDTH > 0]
+        self.pipes = [pipe for pipe in self.pipes if pipe.x + pipe.width > 0]
 
         # increment passed pipes counter
         for pipe in self.pipes:
-            if not pipe.passed and pipe.x + PIPE_WIDTH < self.game.bird.rect.left:
+            if not pipe.passed and pipe.x + pipe.width < self.game.bird.rect.left:
                 pipe.passed = True
                 self.passed_pipes += 1
 

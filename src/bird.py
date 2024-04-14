@@ -64,7 +64,7 @@ class Bird(pg.sprite.Sprite):
     def collide(self, pipes: list[Pipe]):
         for pipe in pipes:
             # in pipe width
-            if self.rect.right > pipe.x and self.rect.left < pipe.x + PIPE_WIDTH:
+            if self.rect.right > pipe.x and self.rect.left < pipe.x + pipe.width:
                 # in pipe gap
                 if self.rect.top > pipe.gap_start and self.rect.bottom < pipe.gap_end:
                     continue
