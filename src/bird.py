@@ -17,8 +17,8 @@ class Bird(pg.sprite.Sprite):
 
         self.jump = False
 
-        self.jump_force = 1300
-        self.gravity = 18
+        self.jump_force = BIRD_JUMP_FORCE
+        self.gravity = BIRD_GRAVITY
 
     def handle_events(self, events: list[pg.Event]):
         for e in events:
