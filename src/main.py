@@ -12,12 +12,13 @@ class Game:
         )
         self.display = pg.Surface((400, 400))
 
-        self.prev_time = 0
+        self.prev_time = time()
         self.dt = 0
 
         self.clock = pg.time.Clock()
 
         self.running = True
+        self.playing = False
 
         self.bird = Bird(self)
 
@@ -27,6 +28,9 @@ class Game:
         for e in events:
             if e.type == pg.QUIT:
                 self.running = False
+            if e.type == pg.KEYDOWN:
+                if e.key == pg.K_SPACE and not self.playing:
+                    self.playing = True
 
         self.bird.handle_events(events)
 
@@ -51,7 +55,9 @@ class Game:
 
     def run(self):
         while self.running:
-            pg.display.set_caption(f"{self.clock.get_fps():.1f}")
+            pg.display.set_caption(
+                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"}"
+            )
 
             self.handle_events()
             self.update()
