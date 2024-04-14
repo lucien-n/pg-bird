@@ -23,7 +23,10 @@ class Bird(pg.sprite.Sprite):
         self.velocity = vec()
 
         self.jump = False
+        self.sudden_jump = False
         self.last_jump_at = 0
+
+        self.released_mouse = False
 
         self.dead = False
 
@@ -42,6 +45,14 @@ class Bird(pg.sprite.Sprite):
         return images
 
     def handle_events(self, events: list[pg.Event]):
+        if pg.mouse.get_pressed()[0]:
+            if self.released_mouse:
+                self.sudden_jump = True
+
+            self.released_mouse = False
+        else:
+            self.released_mouse = True
+
         for e in events:
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_SPACE:
@@ -63,13 +74,16 @@ class Bird(pg.sprite.Sprite):
 
     def update(self, dt: float, pipes: list[Pipe]):
         now = time()
-        if now - self.last_jump_at > BIRD_JUMP_COOLDOWN_MS / 1000 and self.jump:
+        if (
+            self.sudden_jump or self.jump
+        ) and now - self.last_jump_at > BIRD_JUMP_COOLDOWN_MS / 1000:
             # avoid getting glued to the ground
             if self.velocity.y > 0:
                 self.velocity.y = 0
 
             self.velocity.y -= BIRD_JUMP_FORCE * dt
             self.last_jump_at = now
+            self.sudden_jump = False
 
         self.velocity.y += BIRD_GRAVITY * dt
 
