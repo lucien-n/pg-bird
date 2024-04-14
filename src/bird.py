@@ -13,6 +13,7 @@ class Bird(pg.sprite.Sprite):
 
         self.rect = self.image.get_frect()
         self.rect.x = CANVAS_SIZE / 5
+        self.rect.y = CANVAS_SIZE / 2 - 24 / 2
 
         self.velocity = vec()
 
