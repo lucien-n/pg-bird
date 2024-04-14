@@ -27,6 +27,7 @@ class Game:
         self.reset()
 
     def reset(self):
+        self.run_started_at = time()
         self.playing = False
         self.score = 0
 
@@ -35,11 +36,15 @@ class Game:
         self.hud = Hud(self)
         self.floor = Floor()
 
+    def start(self):
+        self.run_started_at = time()
+        self.playing = True
+
     def handle_events(self):
         events = pg.event.get()
 
         if pg.mouse.get_pressed()[0] and not self.playing:
-            self.playing = True
+            self.start()
 
         for e in events:
             if e.type == pg.QUIT:
@@ -48,7 +53,7 @@ class Game:
                 if e.key == pg.K_ESCAPE:
                     self.running = False
                 if e.key == pg.K_SPACE and not self.playing:
-                    self.playing = True
+                    self.start()
                 if e.key == pg.K_r:
                     self.reset()
 
