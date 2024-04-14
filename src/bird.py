@@ -23,6 +23,7 @@ class Bird(pg.sprite.Sprite):
         self.velocity = vec()
 
         self.jump = False
+        self.last_jump_at = 0
 
         self.dead = False
 
@@ -43,9 +44,11 @@ class Bird(pg.sprite.Sprite):
     def handle_events(self, events: list[pg.Event]):
         for e in events:
             if e.type == pg.KEYDOWN:
-                match e.key:
-                    case pg.K_SPACE:
-                        self.jump = True
+                if e.key == pg.K_SPACE:
+                    self.jump = True
+            if e.type == pg.KEYUP:
+                if e.key == pg.K_SPACE:
+                    self.jump = False
 
     def collide(self, pipes: list[Pipe]):
         for pipe in pipes:
@@ -59,13 +62,14 @@ class Bird(pg.sprite.Sprite):
                     self.dead = True
 
     def update(self, dt: float, pipes: list[Pipe]):
-        if self.jump:
+        now = time()
+        if now - self.last_jump_at > BIRD_JUMP_COOLDOWN_MS / 1000 and self.jump:
             # avoid getting glued to the ground
             if self.velocity.y > 0:
                 self.velocity.y = 0
 
             self.velocity.y -= BIRD_JUMP_FORCE * dt
-            self.jump = False
+            self.last_jump_at = now
 
         self.velocity.y += BIRD_GRAVITY * dt
 
