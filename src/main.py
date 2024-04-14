@@ -9,6 +9,7 @@ import math
 
 class Game:
     pg.init()
+    mixer.init()
 
     def __init__(self) -> None:
         pg.display.set_caption("Flappy Bird")

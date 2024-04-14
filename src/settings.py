@@ -1,4 +1,5 @@
 import pygame as pg
+from pygame import mixer
 from math import floor
 from pygame.math import Vector2 as vec
 from pathlib import Path
@@ -34,4 +35,6 @@ NIGHT_DURATION_S = 120
 
 FIRST_PIPE_DELAY_S = 2.5
 
-DEBUG = True
+DEBUG = False
+
+VOLUME = 0.5

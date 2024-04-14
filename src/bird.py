@@ -30,6 +30,12 @@ class Bird(pg.sprite.Sprite):
 
         self.dead = False
 
+        self.sounds = {
+            "hit": mixer.Sound(path / "assets/audio/hit.ogg"),
+            "wing": mixer.Sound(path / "assets/audio/wing.ogg"),
+        }
+        [sound.set_volume(VOLUME) for sound in self.sounds.values()]
+
     def load_images(self) -> list[pg.sprite.Sprite]:
         names = [
             "yellowbird-downflap",
@@ -71,6 +77,7 @@ class Bird(pg.sprite.Sprite):
                 # collided with pipe
                 else:
                     self.dead = True
+                    self.sounds["hit"].play()
 
     def update(self, dt: float, pipes: list[Pipe]):
         now = time()
@@ -84,6 +91,8 @@ class Bird(pg.sprite.Sprite):
             self.velocity.y -= BIRD_JUMP_FORCE * dt
             self.last_jump_at = now
             self.sudden_jump = False
+
+            self.sounds["wing"].play()
 
         self.velocity.y += BIRD_GRAVITY * dt
 
