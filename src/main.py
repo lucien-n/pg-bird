@@ -21,23 +21,19 @@ class Game:
         self.clock = pg.time.Clock()
 
         self.running = True
-        self.playing = False
 
         self.background = Background()
-        self.bird = Bird(self)
-        self.piper = Piper(self)
-        self.hud = Hud(self)
-        self.floor = Floor()
 
-        self.score = 0
+        self.reset()
 
     def reset(self):
+        self.playing = False
+        self.score = 0
+
         self.bird = Bird(self)
         self.piper = Piper(self)
         self.hud = Hud(self)
         self.floor = Floor()
-        self.score = 0
-        self.playing = False
 
     def handle_events(self):
         events = pg.event.get()
