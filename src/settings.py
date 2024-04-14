@@ -8,7 +8,7 @@ from time import time
 path = Path(__file__).parent.parent
 
 
-SIZE = WIDTH, HEIGHT = 1280, 720
+WINDOW_SIZE = WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 288, 512
 
 TARGET_FPS = 120

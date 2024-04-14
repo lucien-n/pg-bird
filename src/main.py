@@ -9,7 +9,7 @@ class Game:
     pg.init()
 
     def __init__(self) -> None:
-        self.window = pg.display.set_mode(GAME_SIZE)
+        self.window = pg.display.set_mode(WINDOW_SIZE)
         self.display = pg.Surface(GAME_SIZE)
 
         self.prev_time = time()
@@ -73,7 +73,11 @@ class Game:
         self.floor.draw(self.display)
         self.hud.draw(self.display)
 
-        self.window.blit(self.display, (0, 0))
+        ratio = WINDOW_HEIGHT / GAME_HEIGHT
+        scaled = pg.transform.scale(
+            self.display, (floor(GAME_WIDTH * ratio), floor(GAME_HEIGHT * ratio))
+        )
+        self.window.blit(scaled, (WINDOW_WIDTH / 2 - scaled.get_width() / 2, 0))
 
         pg.display.update()
 
