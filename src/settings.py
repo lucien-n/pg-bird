@@ -9,7 +9,8 @@ path = Path(__file__).parent.parent
 
 
 SIZE = WIDTH, HEIGHT = 1280, 720
-CANVAS_SIZE = 400
+GAME_SIZE = GAME_WIDTH, GAME_HEIGHT = 288, 512
+
 TARGET_FPS = 120
 
 PIPE_SPEED = 150

@@ -9,10 +9,11 @@ class Pipe:
 
         self.gap = PIPE_RED_GAP if type == "red" else PIPE_GREEN_GAP
 
-        self.x = CANVAS_SIZE
-        margin = floor(CANVAS_SIZE / 15)
+        self.x = GAME_WIDTH
+
+        margin = floor(GAME_HEIGHT / 15)
         self.gap_start = (
-            randint(margin + self.gap, CANVAS_SIZE - margin - self.gap) - self.gap / 2
+            randint(margin + self.gap, GAME_HEIGHT - margin - self.gap) - self.gap / 2
         )
         self.gap_end = self.gap_start + self.gap
 

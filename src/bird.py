@@ -12,8 +12,8 @@ class Bird(pg.sprite.Sprite):
         self.image = self.images[0]
 
         self.rect = self.image.get_frect()
-        self.rect.x = CANVAS_SIZE / 5
-        self.rect.y = CANVAS_SIZE / 2 - 24 / 2
+        self.rect.x = GAME_WIDTH / 5
+        self.rect.y = GAME_HEIGHT / 2 - 24 / 2
 
         self.framerate = 4
         self.last_frame_at = 0
@@ -101,8 +101,8 @@ class Bird(pg.sprite.Sprite):
             self.rect.top = 0
 
         # todo: replace with death
-        if self.rect.bottom > CANVAS_SIZE:
-            self.rect.bottom = CANVAS_SIZE
+        if self.rect.bottom > GAME_HEIGHT:
+            self.rect.bottom = GAME_HEIGHT
 
         self.collide(pipes)
 

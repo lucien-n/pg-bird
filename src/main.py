@@ -9,10 +9,8 @@ class Game:
     pg.init()
 
     def __init__(self) -> None:
-        self.window = pg.display.set_mode(
-            size=SIZE,
-        )
-        self.display = pg.Surface((CANVAS_SIZE, CANVAS_SIZE))
+        self.window = pg.display.set_mode(GAME_SIZE)
+        self.display = pg.Surface(GAME_SIZE)
 
         self.prev_time = time()
         self.dt = 0
@@ -60,7 +58,8 @@ class Game:
         self.dt = now - self.prev_time
         self.prev_time = now
 
-        self.floor.update(self.dt)
+        if not self.bird.dead:
+            self.floor.update(self.dt)
 
         if self.playing and not self.bird.dead:
             self.bird.update(self.dt, self.piper.pipes)
@@ -74,8 +73,7 @@ class Game:
         self.floor.draw(self.display)
         self.hud.draw(self.display)
 
-        scaled = pg.transform.scale(self.display, (HEIGHT, HEIGHT))
-        self.window.blit(scaled, (WIDTH / 2 - scaled.get_width() / 2, 0))
+        self.window.blit(self.display, (0, 0))
 
         pg.display.update()
 

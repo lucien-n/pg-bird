@@ -29,7 +29,7 @@ class Piper:
     def update(self, dt: float):
         # spawn a new pipe of the last spawned pipe traveled a third of the canvas
         last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
-        if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
+        if not last_pipe or last_pipe.x < GAME_WIDTH - GAME_WIDTH / 1.5:
             type = "green"
 
             # 4 percent change to get a red pipe
