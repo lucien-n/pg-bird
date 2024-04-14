@@ -17,6 +17,11 @@ class Piper:
         }
         self.pipe_height = self.pipes_sprites["green"][0].get_height()
 
+        self.sounds = {
+            "point": mixer.Sound(path / "assets/audio/point.ogg"),
+        }
+        [sound.set_volume(VOLUME) for sound in self.sounds.values()]
+
     def load_pipes(self, color: str):
         if not color == "red" and not color == "green":
             raise Exception(f"Pipe '{color}' not found")
@@ -58,7 +63,7 @@ class Piper:
                     PIPE_RED_SCORE if pipe.type == "red" else PIPE_GREEN_SCORE
                 )
 
-        # calculate pipes speed based on passed pipes count
+                self.sounds["point"].play()
 
         # update pipes position
         for pipe in self.pipes:

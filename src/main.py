@@ -29,6 +29,11 @@ class Game:
 
         self.background = Background()
 
+        self.sounds = {
+            "swoosh": mixer.Sound(path / "assets/audio/swoosh.ogg"),
+        }
+        [sound.set_volume(VOLUME) for sound in self.sounds.values()]
+
         self.reset()
 
     def reset(self):
@@ -45,6 +50,8 @@ class Game:
     def start(self):
         self.run_started_at = time()
         self.playing = True
+
+        self.sounds["swoosh"].play()
 
     def handle_events(self):
         events = pg.event.get()
