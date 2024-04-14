@@ -122,6 +122,7 @@ class Bird(pg.sprite.Sprite):
             self.rect.topleft = topleft
 
     def draw(self, surface: pg.Surface):
-        self.animate()
+        if not self.dead:
+            self.animate()
 
         surface.blit(self.image, self.rect)
