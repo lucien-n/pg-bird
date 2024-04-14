@@ -33,8 +33,7 @@ class Piper:
             type = "green"
 
             # 4 percent change to get a red pipe
-            r = randint(0, 25)
-            if r == 0:
+            if randint(0, 25) == 0:
                 type = "red"
 
             pipe = Pipe(type, self.pipes_sprites[type][0].get_width())
