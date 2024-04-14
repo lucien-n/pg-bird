@@ -97,12 +97,8 @@ class Bird(pg.sprite.Sprite):
 
         self.rect.y += self.velocity.y
 
-        if self.rect.top < 0:
-            self.rect.top = 0
-
-        # todo: replace with death
-        if self.rect.bottom > GAME_HEIGHT:
-            self.rect.bottom = GAME_HEIGHT
+        if self.rect.bottom > GAME_HEIGHT - 52:  # 52 is floor height
+            self.rect.bottom = GAME_HEIGHT - 52
 
         self.collide(pipes)
 
