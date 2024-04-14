@@ -27,6 +27,10 @@ class Piper:
         return (pipe_top, pipe_bottom)
 
     def update(self, dt: float):
+        # wait a certain time at run start before spawning the first pipe
+        if time() - self.game.run_started_at < FIRST_PIPE_DELAY_S:
+            return
+
         # spawn a new pipe if the last spawned pipe traveled a third of the way
         last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
         if not last_pipe or last_pipe.x < GAME_WIDTH - GAME_WIDTH / 1.5:
