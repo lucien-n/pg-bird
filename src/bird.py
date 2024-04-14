@@ -1,4 +1,5 @@
 from .settings import *
+from .pipe import Pipe
 
 
 class Bird(pg.sprite.Sprite):
@@ -20,6 +21,8 @@ class Bird(pg.sprite.Sprite):
         self.jump_force = BIRD_JUMP_FORCE
         self.gravity = BIRD_GRAVITY
 
+        self.dead = False
+
     def handle_events(self, events: list[pg.Event]):
         for e in events:
             if e.type == pg.KEYDOWN:
@@ -27,7 +30,18 @@ class Bird(pg.sprite.Sprite):
                     case pg.K_SPACE:
                         self.jump = True
 
-    def update(self, dt: float):
+    def collide(self, pipes: list[Pipe]):
+        for pipe in pipes:
+            # in pipe width
+            if self.rect.right > pipe.x and self.rect.left < pipe.x + PIPE_WIDTH:
+                # in pipe gap
+                if self.rect.top > pipe.gap_start and self.rect.bottom < pipe.gap_end:
+                    continue
+                # collided with pipe
+                else:
+                    self.dead = True
+
+    def update(self, dt: float, pipes: list[Pipe]):
         if self.jump:
             # avoid getting glued to the ground
             if self.velocity.y > 0:
@@ -54,6 +68,8 @@ class Bird(pg.sprite.Sprite):
         # todo: replace with death
         if self.rect.bottom > CANVAS_SIZE:
             self.rect.bottom = CANVAS_SIZE
+
+        self.collide(pipes)
 
     def draw(self, surface: pg.Surface):
         surface.blit(self.image, self.rect)

@@ -41,18 +41,19 @@ class Game:
         self.dt = now - self.prev_time
         self.prev_time = now
 
-        self.bird.update(self.dt)
+        if not self.bird.dead:
+            self.bird.update(self.dt, self.pipes)
 
-        # spawn a new pipe of the last spawned pipe traveled a third of the canvas
-        last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
-        if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
-            pipe = Pipe()
-            self.pipes.append(pipe)
+            # spawn a new pipe of the last spawned pipe traveled a third of the canvas
+            last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
+            if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
+                pipe = Pipe()
+                self.pipes.append(pipe)
 
-        # filter out of screen pipes
-        self.pipes = [pipe for pipe in self.pipes if pipe.x + PIPE_WIDTH > 0]
+            # filter out of screen pipes
+            self.pipes = [pipe for pipe in self.pipes if pipe.x + PIPE_WIDTH > 0]
 
-        [pipe.update(self.dt) for pipe in self.pipes]
+            [pipe.update(self.dt) for pipe in self.pipes]
 
     def draw(self):
         self.display.fill(Colors.BACKGROUND)
@@ -71,7 +72,7 @@ class Game:
     def run(self):
         while self.running:
             pg.display.set_caption(
-                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)}"
+                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)} {"DEAD" if self.bird.dead else "ALIVE"}"
             )
 
             self.handle_events()
