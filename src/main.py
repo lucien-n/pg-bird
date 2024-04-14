@@ -68,7 +68,7 @@ class Game:
 
         self.background.update()
 
-        self.speed = 150 * math.pow(1.01, self.piper.passed_pipes) * self.dt
+        self.speed = floor(150 * math.pow(1.01, self.piper.passed_pipes)) * self.dt
 
         if not self.bird.dead:
             self.floor.update()
