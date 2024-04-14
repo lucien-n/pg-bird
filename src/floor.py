@@ -2,16 +2,20 @@ from .settings import *
 
 
 class Floor(pg.sprite.Sprite):
-    def __init__(self) -> None:
+    def __init__(self, game) -> None:
+        from .main import Game
+
+        self.game: Game = game
+
         self.image = pg.image.load(path / "assets/base.png").convert()
 
         self.x1 = 0
         self.x2 = self.image.get_width()
 
-    def update(self, dt: float):
+    def update(self):
         w = self.image.get_width()
 
-        self.x1 -= PIPE_SPEED * dt
+        self.x1 -= self.game.speed
         self.x2 = self.x1 + w
 
         if self.x1 + w < 0:

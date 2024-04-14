@@ -18,6 +18,3 @@ class Pipe:
         self.gap_end = self.gap_start + self.gap
 
         self.passed = False
-
-    def update(self, dt: float):
-        self.x -= 150 * dt

@@ -26,12 +26,12 @@ class Piper:
 
         return (pipe_top, pipe_bottom)
 
-    def update(self, dt: float):
+    def update(self):
         # wait a certain time at run start before spawning the first pipe
         if time() - self.game.run_started_at < FIRST_PIPE_DELAY_S:
             return
 
-        # spawn a new pipe if the last spawned pipe traveled a third of the way
+        # spawn a new pipe if the last spawned pipe traveled enough
         last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
         if not last_pipe or last_pipe.x < GAME_WIDTH - GAME_WIDTH / 1.5:
             type = "green"
@@ -56,7 +56,11 @@ class Piper:
                     PIPE_RED_SCORE if pipe.type == "red" else PIPE_GREEN_SCORE
                 )
 
-        [pipe.update(dt) for pipe in self.pipes]
+        # calculate pipes speed based on passed pipes count
+
+        # update pipes position
+        for pipe in self.pipes:
+            pipe.x -= self.game.speed
 
     def draw(self, surface: pg.Surface):
         for pipe in self.pipes:

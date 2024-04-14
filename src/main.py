@@ -4,6 +4,7 @@ from .hud import Hud
 from .piper import Piper
 from .floor import Floor
 from .background import Background
+import math
 
 
 class Game:
@@ -30,11 +31,12 @@ class Game:
         self.run_started_at = time()
         self.playing = False
         self.score = 0
+        self.speed = 0
 
         self.bird = Bird(self)
         self.piper = Piper(self)
         self.hud = Hud(self)
-        self.floor = Floor()
+        self.floor = Floor(self)
 
     def start(self):
         self.run_started_at = time()
@@ -66,12 +68,14 @@ class Game:
 
         self.background.update()
 
+        self.speed = 150 * math.pow(1.01, self.piper.passed_pipes) * self.dt
+
         if not self.bird.dead:
-            self.floor.update(self.dt)
+            self.floor.update()
 
         if self.playing and not self.bird.dead:
             self.bird.update(self.dt, self.piper.pipes)
-            self.piper.update(self.dt)
+            self.piper.update()
 
     def draw(self):
         self.background.draw(self.display)
