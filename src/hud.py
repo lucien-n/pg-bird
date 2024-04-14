@@ -9,16 +9,20 @@ class Hud:
         self.game: Game = game
 
         self.digits = self.load_numbers()
-        self.gameover = pg.image.load(path / "assets/gameover.png").convert_alpha()
+        self.gameover = pg.image.load(
+            path / "assets/sprites/gameover.png"
+        ).convert_alpha()
 
-        self.start_message = pg.image.load(path / "assets/message.png").convert_alpha()
+        self.start_message = pg.image.load(
+            path / "assets/sprites/message.png"
+        ).convert_alpha()
         self.start_message_scale = 1
         self.start_message_scale_direction = 1
 
     def load_numbers(self) -> list[pg.sprite.Sprite]:
         numbers = []
         for i in range(9 + 1):
-            number = pg.image.load(path / rf"assets/{i}.png").convert_alpha()
+            number = pg.image.load(path / rf"assets/sprites/{i}.png").convert_alpha()
             numbers.append(number)
 
         return numbers

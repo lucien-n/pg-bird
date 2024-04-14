@@ -39,7 +39,7 @@ class Bird(pg.sprite.Sprite):
         images = []
 
         for name in names:
-            image = pg.image.load(path / rf"assets/{name}.png").convert_alpha()
+            image = pg.image.load(path / rf"assets/sprites/{name}.png").convert_alpha()
             images.append(image)
 
         return images

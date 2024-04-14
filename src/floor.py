@@ -7,7 +7,7 @@ class Floor(pg.sprite.Sprite):
 
         self.game: Game = game
 
-        self.image = pg.image.load(path / "assets/base.png").convert()
+        self.image = pg.image.load(path / "assets/sprites/base.png").convert()
 
         self.x1 = 0
         self.x2 = self.image.get_width()

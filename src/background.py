@@ -4,8 +4,10 @@ from .settings import *
 class Background(pg.sprite.Sprite):
     def __init__(self) -> None:
         self.images = {
-            "day": pg.image.load(path / "assets/background-day.png").convert(),
-            "night": pg.image.load(path / "assets/background-night.png").convert(),
+            "day": pg.image.load(path / "assets/sprites/background-day.png").convert(),
+            "night": pg.image.load(
+                path / "assets/sprites/background-night.png"
+            ).convert(),
         }
 
         self.cycle_started_at = time()
