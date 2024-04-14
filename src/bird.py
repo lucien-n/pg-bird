@@ -11,7 +11,7 @@ class Bird(pg.sprite.Sprite):
         self.image.fill(Colors.BIRD)
 
         self.rect = self.image.get_frect()
-        self.rect.x = 400 / 5
+        self.rect.x = CANVAS_SIZE / 5
 
         self.velocity = vec()
 
@@ -45,8 +45,8 @@ class Bird(pg.sprite.Sprite):
             self.rect.top = 0
 
         # todo: replace with death
-        if self.rect.bottom > 400:
-            self.rect.bottom = 400
+        if self.rect.bottom > CANVAS_SIZE:
+            self.rect.bottom = CANVAS_SIZE
 
     def draw(self, surface: pg.Surface):
         surface.blit(self.image, self.rect)

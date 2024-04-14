@@ -10,7 +10,7 @@ class Game:
         self.window = pg.display.set_mode(
             size=SIZE,
         )
-        self.display = pg.Surface((400, 400))
+        self.display = pg.Surface((CANVAS_SIZE, CANVAS_SIZE))
 
         self.prev_time = time()
         self.dt = 0
