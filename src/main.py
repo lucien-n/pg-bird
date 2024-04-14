@@ -37,6 +37,7 @@ class Game:
         self.hud = Hud(self)
         self.floor = Floor()
         self.score = 0
+        self.playing = False
 
     def handle_events(self):
         events = pg.event.get()
