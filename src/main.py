@@ -49,7 +49,7 @@ class Game:
         self.dt = now - self.prev_time
         self.prev_time = now
 
-        if not self.bird.dead:
+        if self.playing and not self.bird.dead:
             self.bird.update(self.dt, self.pipes)
 
             # spawn a new pipe of the last spawned pipe traveled a third of the canvas
