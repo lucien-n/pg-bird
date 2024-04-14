@@ -37,6 +37,9 @@ class Game:
             if e.type == pg.QUIT:
                 self.running = False
             if e.type == pg.KEYDOWN:
+                if e.key == pg.K_ESCAPE:
+                    self.running = False
+
                 if e.key == pg.K_SPACE and not self.playing:
                     self.playing = True
                 if e.key == pg.K_r:
