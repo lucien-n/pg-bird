@@ -1,6 +1,7 @@
 from .settings import *
 from .bird import Bird
 from .pipe import Pipe
+from .hud import Hud
 from time import time
 
 
@@ -23,7 +24,10 @@ class Game:
 
         self.bird = Bird(self)
         self.pipes: list[Pipe] = []
+        self.hud = Hud(self)
+
         self.passed_pipes = 0
+        self.score = 0
 
     def reset(self):
         self.bird = Bird(self)
@@ -70,14 +74,18 @@ class Game:
                     pipe.passed = True
                     self.passed_pipes += 1
 
+                    # todo: add pipes with bigger score cause why not
+                    self.score += 10
+
             [pipe.update(self.dt) for pipe in self.pipes]
 
     def draw(self):
         self.display.fill(Colors.BACKGROUND)
 
         self.bird.draw(self.display)
-
         [pipe.draw(self.display) for pipe in self.pipes]
+
+        self.hud.draw(self.display)
 
         scaled = pg.transform.scale(self.display, (HEIGHT, HEIGHT))
         self.window.blit(scaled, (WIDTH / 2 - scaled.get_width() / 2, 0))
