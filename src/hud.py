@@ -33,7 +33,6 @@ class Hud:
         return score_surfaces
 
     def draw_ingame(self, surface: pg.Surface):
-        padding = 8
         score_surfaces = self.get_score_surfaces(self.game.score)
 
         for index, score_surface in enumerate(score_surfaces):
@@ -41,9 +40,10 @@ class Hud:
                 [digit.get_width() for digit in score_surfaces[:index]]
             )
 
+            width = width_till_digit + index * TEXT_SPACING
             surface.blit(
                 score_surface,
-                (padding + width_till_digit + index * TEXT_SPACING, padding),
+                (GAME_WIDTH / 2 + width / 2, 48),
             )
 
         if self.game.bird.dead:
