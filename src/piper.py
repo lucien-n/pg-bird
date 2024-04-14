@@ -22,7 +22,7 @@ class Piper:
             raise Exception(f"Pipe '{color}' not found")
 
         pipe_bottom = pg.image.load(path / rf"assets/pipe-{color}.png").convert_alpha()
-        pipe_top = pg.transform.flip(pipe_bottom, True, True)
+        pipe_top = pg.transform.flip(pipe_bottom, False, True)
 
         return (pipe_top, pipe_bottom)
 
