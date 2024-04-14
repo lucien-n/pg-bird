@@ -8,6 +8,7 @@ class Hud:
         self.game: Game = game
 
         self.digits = self.load_numbers()
+        self.gameover = pg.image.load(path / "assets/gameover.png").convert_alpha()
 
     def load_numbers(self) -> list[pg.sprite.Sprite]:
         numbers = []
@@ -39,3 +40,8 @@ class Hud:
                 score_surface,
                 (padding + width_till_digit + index * TEXT_SPACING, padding),
             )
+
+        if self.game.bird.dead:
+            x = surface.get_width() / 2 - self.gameover.get_width() / 2
+            y = surface.get_height() / 2 - self.gameover.get_height() / 2
+            surface.blit(self.gameover, (x, y))
