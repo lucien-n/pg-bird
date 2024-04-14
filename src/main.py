@@ -3,6 +3,7 @@ from .bird import Bird
 from .hud import Hud
 from .piper import Piper
 from .floor import Floor
+from .background import Background
 
 
 class Game:
@@ -20,6 +21,7 @@ class Game:
         self.running = True
         self.playing = False
 
+        self.background = Background()
         self.bird = Bird(self)
         self.piper = Piper(self)
         self.hud = Hud(self)
@@ -58,6 +60,8 @@ class Game:
         self.dt = now - self.prev_time
         self.prev_time = now
 
+        self.background.update()
+
         if not self.bird.dead:
             self.floor.update(self.dt)
 
@@ -68,6 +72,7 @@ class Game:
     def draw(self):
         self.display.fill(Colors.BACKGROUND)
 
+        self.background.draw(self.display)
         self.bird.draw(self.display)
         self.piper.draw(self.display)
         self.floor.draw(self.display)
