@@ -1,5 +1,6 @@
 from .settings import *
 from .bird import Bird
+from .pipe import Pipe
 from time import time
 
 
@@ -21,6 +22,7 @@ class Game:
         self.playing = False
 
         self.bird = Bird(self)
+        self.pipes: list[Pipe] = []
 
     def handle_events(self):
         events = pg.event.get()
@@ -41,10 +43,23 @@ class Game:
 
         self.bird.update(self.dt)
 
+        # spawn a new pipe of the last spawned pipe traveled a third of the canvas
+        last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
+        if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
+            pipe = Pipe()
+            self.pipes.append(pipe)
+
+        # filter out of screen pipes
+        self.pipes = [pipe for pipe in self.pipes if pipe.x + PIPE_WIDTH > 0]
+
+        [pipe.update(self.dt) for pipe in self.pipes]
+
     def draw(self):
         self.display.fill(Colors.BACKGROUND)
 
         self.bird.draw(self.display)
+
+        [pipe.draw(self.display) for pipe in self.pipes]
 
         scaled = pg.transform.scale(self.display, (HEIGHT, HEIGHT))
         self.window.blit(scaled, (WIDTH / 2 - scaled.get_width() / 2, 0))
@@ -56,7 +71,7 @@ class Game:
     def run(self):
         while self.running:
             pg.display.set_caption(
-                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"}"
+                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)}"
             )
 
             self.handle_events()

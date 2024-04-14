@@ -29,15 +29,22 @@ class Bird(pg.sprite.Sprite):
 
     def update(self, dt: float):
         if self.jump:
+            # avoid getting glued to the ground
+            if self.velocity.y > 0:
+                self.velocity.y = 0
+
             self.velocity.y -= self.jump_force * dt
             self.jump = False
 
         self.velocity.y += self.gravity * dt
 
-        if self.velocity.y > 7:
-            self.velocity.y = 7
-        if self.velocity.y < -7:
-            self.velocity.y = -7
+        # cap falling velocity
+        if self.velocity.y > 8:
+            self.velocity.y = 8
+
+        # cap jumping velocity
+        if self.velocity.y < -4.5:
+            self.velocity.y = -4.5
 
         self.rect.y += self.velocity.y
 
