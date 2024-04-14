@@ -100,7 +100,8 @@ class Bird(pg.sprite.Sprite):
         if self.rect.bottom > GAME_HEIGHT - 52:  # 52 is floor height
             self.rect.bottom = GAME_HEIGHT - 52
 
-        self.collide(pipes)
+        if not DEBUG:
+            self.collide(pipes)
 
     def animate(self):
         now = time()
