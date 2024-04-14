@@ -14,6 +14,6 @@ run with `python3 run.py` in the root directory
 
 ## Controls
 
-- `SPACE` or `RMOUSE` to jump
+- `SPACE` or `LMOUSE` to jump
 - `R` to reset
 - `ESC` to close
