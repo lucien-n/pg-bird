@@ -24,6 +24,8 @@ class Game:
         self.bird = Bird(self)
         self.pipes: list[Pipe] = []
 
+        self.passed_pipes = 0
+
     def handle_events(self):
         events = pg.event.get()
 
@@ -53,6 +55,12 @@ class Game:
             # filter out of screen pipes
             self.pipes = [pipe for pipe in self.pipes if pipe.x + PIPE_WIDTH > 0]
 
+            # increment passed pipes counter
+            for pipe in self.pipes:
+                if not pipe.passed and pipe.x + PIPE_WIDTH < self.bird.rect.left:
+                    pipe.passed = True
+                    self.passed_pipes += 1
+
             [pipe.update(self.dt) for pipe in self.pipes]
 
     def draw(self):
@@ -72,7 +80,7 @@ class Game:
     def run(self):
         while self.running:
             pg.display.set_caption(
-                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)} {"DEAD" if self.bird.dead else "ALIVE"}"
+                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)} {"DEAD" if self.bird.dead else "ALIVE"} {self.passed_pipes}"
             )
 
             self.handle_events()

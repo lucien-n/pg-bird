@@ -11,6 +11,8 @@ class Pipe:
         )
         self.gap_end = self.gap_start + PIPE_GAP
 
+        self.passed = False
+
     def update(self, dt: float):
         self.x -= 150 * dt
 
