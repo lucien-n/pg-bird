@@ -16,6 +16,9 @@ class Game:
         self.window = pg.display.set_mode(WINDOW_SIZE)
         self.display = pg.Surface(GAME_SIZE)
 
+        self.icon = pg.image.load(path / "assets/favicon.ico").convert_alpha()
+        pg.display.set_icon(self.icon)
+
         self.prev_time = time()
         self.dt = 0
 
