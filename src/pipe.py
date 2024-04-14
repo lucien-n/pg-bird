@@ -3,13 +3,16 @@ from random import randint
 
 
 class Pipe:
-    def __init__(self) -> None:
+    def __init__(self, type: str) -> None:
+        self.type = type
+        self.gap = PIPE_RED_GAP if type == "red" else PIPE_GREEN_GAP
+
         self.x = CANVAS_SIZE
         margin = floor(CANVAS_SIZE / 15)
         self.gap_start = (
-            randint(margin + PIPE_GAP, CANVAS_SIZE - margin - PIPE_GAP) - PIPE_GAP / 2
+            randint(margin + self.gap, CANVAS_SIZE - margin - self.gap) - self.gap / 2
         )
-        self.gap_end = self.gap_start + PIPE_GAP
+        self.gap_end = self.gap_start + self.gap
 
         self.passed = False
 

@@ -1,5 +1,6 @@
 from .settings import *
 from .pipe import Pipe
+from random import randint
 
 
 class Piper:
@@ -10,8 +11,11 @@ class Piper:
         self.pipes: list[Pipe] = []
         self.passed_pipes = 0
 
-        self.top_pipe, self.bottom_pipe = self.load_pipes("green")
-        self.pipe_height = self.top_pipe.get_height()
+        self.pipes_sprites = {
+            "green": self.load_pipes("green"),
+            "red": self.load_pipes("red"),
+        }
+        self.pipe_height = self.pipes_sprites["green"][0].get_height()
 
     def load_pipes(self, color: str):
         if not color == "red" and not color == "green":
@@ -26,7 +30,14 @@ class Piper:
         # spawn a new pipe of the last spawned pipe traveled a third of the canvas
         last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
         if not last_pipe or last_pipe.x < CANVAS_SIZE - CANVAS_SIZE / 3:
-            pipe = Pipe()
+            type = "green"
+
+            # 8 percent change to get a red pipe
+            r = randint(1, 1 + 1)
+            if r == 1:
+                type = "red"
+
+            pipe = Pipe(type)
             self.pipes.append(pipe)
 
         # filter out of screen pipes
@@ -38,15 +49,18 @@ class Piper:
                 pipe.passed = True
                 self.passed_pipes += 1
 
-                # todo: add pipes with bigger score cause why not
-                self.game.score += 10
+                self.game.score += (
+                    PIPE_RED_SCORE if pipe.type == "red" else PIPE_GREEN_SCORE
+                )
 
         [pipe.update(dt) for pipe in self.pipes]
 
     def draw(self, surface: pg.Surface):
         for pipe in self.pipes:
+            top_pipe, bottom_pipe = self.pipes_sprites[pipe.type]
+
             # top
-            surface.blit(self.top_pipe, (pipe.x, -self.pipe_height + pipe.gap_start))
+            surface.blit(top_pipe, (pipe.x, -self.pipe_height + pipe.gap_start))
 
             # bottom
-            surface.blit(self.bottom_pipe, (pipe.x, pipe.gap_end))
+            surface.blit(bottom_pipe, (pipe.x, pipe.gap_end))
