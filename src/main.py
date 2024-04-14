@@ -10,6 +10,8 @@ class Game:
     pg.init()
 
     def __init__(self) -> None:
+        pg.display.set_caption("Flappy Bird")
+
         self.window = pg.display.set_mode(WINDOW_SIZE)
         self.display = pg.Surface(GAME_SIZE)
 
@@ -88,10 +90,6 @@ class Game:
 
     def run(self):
         while self.running:
-            pg.display.set_caption(
-                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.piper.pipes)} {"DEAD" if self.bird.dead else "ALIVE"} {self.bird.current_frame}"
-            )
-
             self.handle_events()
             self.update()
             self.draw()
