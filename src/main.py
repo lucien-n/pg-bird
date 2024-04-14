@@ -1,8 +1,8 @@
 from .settings import *
 from .bird import Bird
-from .pipe import Pipe
 from .hud import Hud
 from .piper import Piper
+from .floor import Floor
 
 
 class Game:
@@ -25,6 +25,7 @@ class Game:
         self.bird = Bird(self)
         self.piper = Piper(self)
         self.hud = Hud(self)
+        self.floor = Floor()
 
         self.score = 0
 
@@ -32,6 +33,7 @@ class Game:
         self.bird = Bird(self)
         self.piper = Piper(self)
         self.hud = Hud(self)
+        self.floor = Floor()
         self.score = 0
 
     def handle_events(self):
@@ -58,6 +60,8 @@ class Game:
         self.dt = now - self.prev_time
         self.prev_time = now
 
+        self.floor.update(self.dt)
+
         if self.playing and not self.bird.dead:
             self.bird.update(self.dt, self.piper.pipes)
             self.piper.update(self.dt)
@@ -67,6 +71,7 @@ class Game:
 
         self.bird.draw(self.display)
         self.piper.draw(self.display)
+        self.floor.draw(self.display)
         self.hud.draw(self.display)
 
         scaled = pg.transform.scale(self.display, (HEIGHT, HEIGHT))
