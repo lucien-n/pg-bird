@@ -9,15 +9,13 @@ class Floor(pg.sprite.Sprite):
         self.x2 = self.image.get_width()
 
     def update(self, dt: float):
+        w = self.image.get_width()
+
         self.x1 -= PIPE_SPEED * dt
+        self.x2 = self.x1 + w
 
-        if self.x1 + self.image.get_width() < 0:
-            self.x1 = GAME_WIDTH
-
-        self.x2 -= PIPE_SPEED * dt
-
-        if self.x2 + self.image.get_width() < 0:
-            self.x2 = GAME_WIDTH
+        if self.x1 + w < 0:
+            self.x1 = 0
 
     def draw(self, surface: pg.Surface):
         y = GAME_HEIGHT - self.image.get_height()
