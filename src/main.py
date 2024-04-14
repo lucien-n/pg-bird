@@ -70,8 +70,6 @@ class Game:
             self.piper.update(self.dt)
 
     def draw(self):
-        self.display.fill(Colors.BACKGROUND)
-
         self.background.draw(self.display)
         self.bird.draw(self.display)
         self.piper.draw(self.display)

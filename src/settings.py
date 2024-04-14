@@ -1,7 +1,6 @@
 import pygame as pg
 from math import floor
 from pygame.math import Vector2 as vec
-from .colors import Colors
 from pathlib import Path
 from time import time
 
