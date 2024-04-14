@@ -24,9 +24,6 @@ class Bird(pg.sprite.Sprite):
 
         self.jump = False
 
-        self.jump_force = BIRD_JUMP_FORCE
-        self.gravity = BIRD_GRAVITY
-
         self.dead = False
 
     def load_images(self) -> list[pg.sprite.Sprite]:
@@ -67,10 +64,10 @@ class Bird(pg.sprite.Sprite):
             if self.velocity.y > 0:
                 self.velocity.y = 0
 
-            self.velocity.y -= self.jump_force * dt
+            self.velocity.y -= BIRD_JUMP_FORCE * dt
             self.jump = False
 
-        self.velocity.y += self.gravity * dt
+        self.velocity.y += BIRD_GRAVITY * dt
 
         # cap falling velocity
         if self.velocity.y > 8:
