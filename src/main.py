@@ -31,6 +31,8 @@ class Game:
     def reset(self):
         self.bird = Bird(self)
         self.piper = Piper(self)
+        self.hud = Hud(self)
+        self.score = 0
 
     def handle_events(self):
         events = pg.event.get()
