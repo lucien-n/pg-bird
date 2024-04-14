@@ -27,7 +27,7 @@ class Piper:
         return (pipe_top, pipe_bottom)
 
     def update(self, dt: float):
-        # spawn a new pipe of the last spawned pipe traveled a third of the canvas
+        # spawn a new pipe if the last spawned pipe traveled a third of the way
         last_pipe = self.pipes[-1] if len(self.pipes) > 0 else None
         if not last_pipe or last_pipe.x < GAME_WIDTH - GAME_WIDTH / 1.5:
             type = "green"
