@@ -8,12 +8,17 @@ class Bird(pg.sprite.Sprite):
 
         self.game: Game = game
 
-        self.image = pg.Surface((24, 24))
-        self.image.fill(Colors.BIRD)
+        self.images = self.load_images()
+        self.image = self.images[0]
 
         self.rect = self.image.get_frect()
         self.rect.x = CANVAS_SIZE / 5
         self.rect.y = CANVAS_SIZE / 2 - 24 / 2
+
+        self.framerate = 4
+        self.last_frame_at = 0
+        self.current_frame = 0
+        self.animation_sequence = [0, 1, 2, 1]
 
         self.velocity = vec()
 
@@ -23,6 +28,20 @@ class Bird(pg.sprite.Sprite):
         self.gravity = BIRD_GRAVITY
 
         self.dead = False
+
+    def load_images(self) -> list[pg.sprite.Sprite]:
+        names = [
+            "yellowbird-downflap",
+            "yellowbird-midflap",
+            "yellowbird-upflap",
+        ]
+        images = []
+
+        for name in names:
+            image = pg.image.load(path / rf"assets/{name}.png").convert_alpha()
+            images.append(image)
+
+        return images
 
     def handle_events(self, events: list[pg.Event]):
         for e in events:
@@ -72,5 +91,22 @@ class Bird(pg.sprite.Sprite):
 
         self.collide(pipes)
 
+    def animate(self):
+        now = time()
+        if now - self.last_frame_at > 1 / self.framerate:
+            self.last_frame_at = now
+            self.current_frame += 1
+
+            if self.current_frame >= len(self.animation_sequence):
+                self.current_frame = 0
+
+            self.image = self.images[self.animation_sequence[self.current_frame]]
+
+            topleft = self.rect.topleft
+            self.rect: pg.Rect = self.image.get_frect()
+            self.rect.topleft = topleft
+
     def draw(self, surface: pg.Surface):
+        self.animate()
+
         surface.blit(self.image, self.rect)

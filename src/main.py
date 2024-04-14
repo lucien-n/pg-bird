@@ -2,7 +2,6 @@ from .settings import *
 from .bird import Bird
 from .pipe import Pipe
 from .hud import Hud
-from time import time
 
 
 class Game:
@@ -97,7 +96,7 @@ class Game:
     def run(self):
         while self.running:
             pg.display.set_caption(
-                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)} {"DEAD" if self.bird.dead else "ALIVE"} {self.passed_pipes}"
+                f"{self.clock.get_fps():.1f} {"PLAYING" if self.playing else "NOT PLAYING"} {len(self.pipes)} {"DEAD" if self.bird.dead else "ALIVE"} {self.passed_pipes} {self.bird.current_frame}"
             )
 
             self.handle_events()
