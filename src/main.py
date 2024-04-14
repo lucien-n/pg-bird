@@ -23,7 +23,11 @@ class Game:
 
         self.bird = Bird(self)
         self.pipes: list[Pipe] = []
+        self.passed_pipes = 0
 
+    def reset(self):
+        self.bird = Bird(self)
+        self.pipes: list[Pipe] = []
         self.passed_pipes = 0
 
     def handle_events(self):
@@ -35,6 +39,8 @@ class Game:
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_SPACE and not self.playing:
                     self.playing = True
+                if e.key == pg.K_r:
+                    self.reset()
 
         self.bird.handle_events(events)
 
